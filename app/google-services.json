@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "5753871952",
+    "project_id": "panicbutton-3db4f",
+    "storage_bucket": "panicbutton-3db4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:5753871952:android:2545307a176fe58883bb55",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "5753871952-vacjsjfb5kbqju645ovid7sft6r9l76e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNScEqPq1vLPwTpYIvOnZxkzAnCq05wpU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "5753871952-vacjsjfb5kbqju645ovid7sft6r9l76e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
