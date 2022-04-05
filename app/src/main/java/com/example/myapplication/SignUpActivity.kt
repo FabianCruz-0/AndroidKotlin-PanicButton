@@ -77,11 +77,14 @@ class SignUpActivity : AppCompatActivity() {
                                     "Nombre" to name,
                                     "Email" to email,
                                     "Mac" to mac,
-                                    "Contrasena" to password
+                                    "Contrasena" to password,
+                                    "Sesion" to "Open"
                                 )
                             )
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
+                            val intent = Intent(this, MainActivity::class.java).apply{
+                                putExtra("mac",mac)
+                            }
+                            this.startActivity(intent)
                             finish()
                         } else {
                             Log.w("TAG", "createUserWithEmail:failure", task.exception)

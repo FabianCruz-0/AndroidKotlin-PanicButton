@@ -21,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private val db = FirebaseFirestore.getInstance()
-    lateinit var mac:String
+    var mac = getMac()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,24 @@ class LoginActivity : AppCompatActivity() {
 
         title = "Iniciar Sesión"
 
+        // Cambia color de la barra del título
+        val actionBar: ActionBar?
+        actionBar = supportActionBar
+        val colorDrawable = ColorDrawable(Color.parseColor("#280691"))
+        actionBar?.setBackgroundDrawable(colorDrawable)
+
         auth = Firebase.auth
+
+        db.collection("usuarios").document(mac).get().addOnSuccessListener { document ->
+            if(document.get("Sesion").toString().equals("Open"))
+            {
+                val intent = Intent(this, MainActivity::class.java).apply{
+                    putExtra("mac",mac)
+                }
+                this.startActivity(intent)
+                finish()
+            }
+        }
 
         signInBtn.setOnClickListener {
 
@@ -64,22 +81,17 @@ class LoginActivity : AppCompatActivity() {
 
         super.onStart()
         val currentUser = auth.currentUser
-        var userExist = false
-        mac = getMac()
 
-        db.collection("usuarios").document(mac).get().addOnSuccessListener {
-            userExist = true
-            System.out.println("si esta")
-            val intent = Intent(this, MainActivity::class.java).apply{
-                putExtra("mac",mac)
+        db.collection("usuarios").document(mac).get().addOnSuccessListener { document ->
+            if(document.get("Sesion").toString().equals("Open"))
+            {
+                val intent = Intent(this, MainActivity::class.java).apply{
+                    putExtra("mac",mac)
+                }
+                this.startActivity(intent)
+                finish()
             }
-            this.startActivity(intent)
-            finish()
         }
-            .addOnFailureListener { exception ->
-                userExist = false
-                System.out.println("no esta")
-            }
 
         if (currentUser != null) {
             val intent = Intent(this, MainActivity::class.java).apply{
@@ -94,6 +106,7 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
                 Log.d("TAG", "signInWithEmail:success")
+                db.collection("usuarios").document(mac).update("Sesion","Open")
                 val intent = Intent(this, MainActivity::class.java).apply{
                     putExtra("mac",mac)
                 }
